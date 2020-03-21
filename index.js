@@ -29,3 +29,5 @@ const fdom = {
     rgb,
   },
 };
+
+export default fdom;
