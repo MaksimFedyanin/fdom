@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "declaration": false,
+    "module": "es2015",
+    "noImplicitAny": false,
+    "outDir": "./dist",
+    "target": "es5",
+    "jsx": "react",
+    "baseUrl": "src",
+    "paths": {
+      "components/*": ["components/*"],
+      "model/*": ["model/*"],
+      "assets/*": ["assets/*"]
+    },
+    "sourceMap": true
+  },
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}
