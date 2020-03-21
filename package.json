@@ -2,7 +2,7 @@
   "name": "fdom",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "rollup -cw",
     "build": "rollup -c"

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { BorderType } from '../utils/Border';
 import Color from '../utils/Color';
 import Cursor from '../utils/Cursor';
-import Alignment from "../utils/Alignment";
+import Alignment from '../utils/Alignment';
 
 interface IMenuItem {
     title: string;
@@ -12,6 +12,7 @@ interface IMenuItem {
 
 const HeaderBtnStyle = {
   style: {
+    background: Color.transparent,
     color: Color.white,
     fontSize: '14px',
     border: {
@@ -19,6 +20,7 @@ const HeaderBtnStyle = {
     },
   },
   hover: {
+    background: Color.darkgray,
     color: Color.black,
     fontSize: '15px',
     border: {
@@ -42,6 +44,7 @@ const HeaderBtn = (props: IMenuItem) => {
     .alignment(Alignment.CENTER)
     .width('100px')
     .height('50px')
+    .background(style.background)
     .borderTop(style.border)
     .onHover((isHover: boolean) => setStyle(isHover
       ? HeaderBtnStyle.hover
