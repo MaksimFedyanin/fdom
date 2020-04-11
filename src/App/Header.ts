@@ -4,7 +4,7 @@ import Image, { ImageFit } from 'components/Image';
 import Spacer from 'components/Spacer';
 import HeaderBtn from './HeaderBtn';
 import rgb from '../utils/rgb';
-import Alignment from "../utils/Alignment";
+import Alignment from '../utils/Alignment';
 
 const items = [
   {
@@ -25,10 +25,10 @@ const HeaderLeft = () => HStack(
 )
   .alignment(Alignment.LEFT);
 const HeaderRight = () => HStack(
-  Image('https://docs-assets.developer.apple.com/published/3b15d468d6/66500a4f-0179-44e6-acb0-af94689d9e8e.png')
-    .width('50px')
-    .fit(ImageFit.fill)
-    .borderRadius('50%', '50%', '50%', '50%'),
+  // Image('https://docs-assets.developer.apple.com/published/3b15d468d6/66500a4f-0179-44e6-acb0-af94689d9e8e.png')
+  //   .width('50px')
+  //   .fit(ImageFit.fill)
+  //   .borderRadius('50%', '50%', '50%', '50%'),
 )
   .alignment(Alignment.RIGHT);
 
@@ -38,9 +38,9 @@ const Header = () => HStack(
   HeaderRight(),
 )
   .alignment(Alignment.LEFT)
+  .background(rgb('1a', '14', '3b'))
   .width('100%')
   .height('50px')
-  .background(rgb('1a', '14', '3b'))
   .render();
 
 export default Header;

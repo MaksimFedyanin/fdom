@@ -42,9 +42,9 @@ const HeaderBtn = (props: IMenuItem) => {
       .cursor(Cursor.pointer),
   )
     .alignment(Alignment.CENTER)
+    .background(style.background)
     .width('100px')
     .height('50px')
-    .background(style.background)
     .borderTop(style.border)
     .onHover((isHover: boolean) => setStyle(isHover
       ? HeaderBtnStyle.hover

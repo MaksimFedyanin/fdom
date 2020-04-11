@@ -1,7 +1,7 @@
-import React, { DetailedReactHTMLElement } from 'react'
-import { ViewInstance } from './view';
-import {RGB} from "../utils/rgb";
-import Color from "../utils/Color";
+import React, { DetailedReactHTMLElement, ReactElement } from 'react';
+import View, {IView, ViewInstance} from './view';
+import { RGB } from '../utils/rgb';
+import Color from '../utils/Color';
 
 export enum TextAlignment {
   CENTER = 'center',
@@ -9,51 +9,54 @@ export enum TextAlignment {
   RIGHT = 'right'
 }
 
-export class TextInstance extends ViewInstance {
-
-  private text: string = null;
-
-  constructor(text: string) {
-    super();
-
-    this.text = text;
-  }
-
-  public render(): DetailedReactHTMLElement<any, any> {
-    return React.createElement('span', { style: this.style, ...this.event }, this.text);
-  }
-
-  public color(color: Color | RGB) {
-    this.style.color = color instanceof RGB ? color.getColor() : color;
-
-    return this;
-  }
-
-  public bold() {
-    this.style.fontWeight = 'bold';
-
-    return this;
-  }
-
-  public font(font: string) {
-    this.style.font = font;
-
-    return this;
-  }
-
-  public fontSize(fontSize: string) {
-    this.style.fontSize = fontSize;
-
-    return this;
-  }
-
-  public textAlignment(textAlignment: TextAlignment) {
-    this.style.textAlign = textAlignment;
-
-    return this;
-  }
+export interface IText extends IView {
+  color: (color: Color | RGB) => IText,
+  bold: () => IText,
+  font: (font: string) => IText,
+  fontSize: (fontSize: string) => IText,
+  textAlignment: (textAlignment: TextAlignment) => IText,
 }
 
-const Text = (data: string) => new TextInstance(data);
+const Text = (text: string): IText => {
+  const style: any = {
+    color: Color.black,
+  };
+  const events: any = {};
+  const type: string = 'span';
+  const children: string = text;
+
+  return ((() => ({
+    ...View(children, type),
+    ...{
+      _style: style,
+      _events: events,
+      color(color: Color | RGB) {
+        this._style.color = color instanceof RGB ? color.getColor() : color;
+
+        return this;
+      },
+      bold() {
+        this._style.fontWeight = 'bold';
+
+        return this;
+      },
+      font(font: string) {
+        this._style.font = font;
+
+        return this;
+      },
+      fontSize(fontSize: string) {
+        this._style.fontSize = fontSize;
+
+        return this;
+      },
+      textAlignment(textAlignment: TextAlignment) {
+        this._style.textAlign = textAlignment;
+
+        return this;
+      },
+    },
+  }))());
+};
 
 export default Text;

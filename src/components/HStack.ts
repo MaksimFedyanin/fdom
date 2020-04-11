@@ -1,20 +1,13 @@
 import { DetailedReactHTMLElement, ReactElement } from 'react';
-import { ViewInstance } from './view';
-import StackInstance from './Stack';
-import Axios from "../utils/Axios";
+import { IView } from './view';
+import Axios from '../utils/Axios';
+import Stack, { IStack } from './Stack';
 
-export class HStackInstance extends StackInstance {
-  constructor(...elements:
-                Array<ViewInstance | ReactElement | DetailedReactHTMLElement<any, any>>) {
-    super(...elements);
-
-    this.axios(Axios.HORIZONTAL);
-  }
-}
-
-const HStack = (...elements:
-                  Array<ViewInstance |
-                    ReactElement |
-                    DetailedReactHTMLElement<any, any>>) => new HStackInstance(...elements);
+const HStack = (...elements: Array<IView | ReactElement | DetailedReactHTMLElement<any, any>>): IStack => ({
+  ...Stack(...elements),
+  ...{
+    _axios: Axios.HORIZONTAL,
+  },
+});
 
 export default HStack;
