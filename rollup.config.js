@@ -13,6 +13,7 @@ import react from 'react';
 import reactDom from 'react-dom';
 
 import tsconfig from './tsconfig.json';
+import pkg from './package.json';
 
 const extensions = ['.ts', '.tsx', '.json', '.js'];
 
@@ -24,15 +25,19 @@ const dest = 'dist';
 
 export default {
   input: production ? 'index.js' : `${src}/index.tsx`,
-  output: {
+  output: [{
     dir: dest,
     format: production ? 'cjs' : 'iife',
     sourcemap: !production && 'inline',
   },
-  external: production ? [
-    'react',
-    'react-dom',
-  ] : [],
+  {
+    file: pkg.module,
+    format: 'es',
+  }],
+  external: [
+    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.peerDependencies || {}),
+  ],
   plugins: [
     resolve({ extensions }),
     commonjs({

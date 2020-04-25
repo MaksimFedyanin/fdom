@@ -2,7 +2,8 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "declaration": false,
+    "declaration": true,
+    "declarationDir": "./dist",
     "module": "es2015",
     "noImplicitAny": false,
     "outDir": "./dist",
@@ -16,5 +17,8 @@
     },
     "sourceMap": true
   },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }

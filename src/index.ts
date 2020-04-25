@@ -10,6 +10,7 @@ import { BorderType } from './src/utils/Border';
 import Color from './src/utils/Color';
 import Cursor from './src/utils/Cursor';
 import rgb from './src/utils/rgb';
+import { IStack } from 'components/Stack';
 
 export {
   VStack,
@@ -24,4 +25,5 @@ export {
   Color,
   Cursor,
   rgb,
+  IStack,
 };
