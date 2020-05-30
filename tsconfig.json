@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "declaration": true,
     "declarationDir": "./dist",
@@ -8,14 +7,14 @@
     "noImplicitAny": false,
     "outDir": "./dist",
     "target": "es5",
-    "jsx": "react",
     "baseUrl": "src",
     "paths": {
       "components/*": ["components/*"],
       "model/*": ["model/*"],
       "assets/*": ["assets/*"]
     },
-    "sourceMap": true
+    "sourceMap": true,
+    "esModuleInterop": true
   },
   "include": [
     "src/**/*"

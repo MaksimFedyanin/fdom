@@ -1,36 +1,36 @@
-// import VStack from './src/components/VStack';
-// import HStack from './src/components/HStack';
-// import Text from './src/components/Text';
-// import Image from './src/components/Image';
-// import Spacer from './src/components/Spacer';
-// import ForEach from './src/components/ForEach';
-// import Alignment from './src/utils/Alignment';
-// import Axios from './src/utils/Axios';
-// import { BorderType } from './src/utils/Border';
-// import Color from './src/utils/Color';
-// import Cursor from './src/utils/Cursor';
-// import rgb from './src/utils/rgb';
-// import { IStack } from 'components/Stack';
+import { BorderType } from 'utils/Border';
+import Cursor from 'utils/Cursor';
+import Div from './components/Div';
+import Span from './components/Span';
+import Input from './components/Input';
+import Btn from './components/Btn';
+import ForEach from './components/ForEach';
+import Color from './utils/Color';
+import Direction from './utils/Direction';
+import Display from './utils/Display';
+import Alignment from './utils/Alignment';
+import FlexDirection from './utils/FlexDirection';
+import rgb from './utils/rgb';
+
+export {
+  Div,
+  Span,
+  Input,
+  Btn,
+  ForEach,
+  Color,
+  Direction,
+  Display,
+  Alignment,
+  FlexDirection,
+  rgb,
+  BorderType,
+  Cursor,
+};
+
+// import React from 'react';
+// import ReactDOM from 'react-dom';
 //
-// export {
-//   VStack,
-//   HStack,
-//   Text,
-//   Image,
-//   Spacer,
-//   ForEach,
-//   Alignment,
-//   Axios,
-//   BorderType,
-//   Color,
-//   Cursor,
-//   rgb,
-//   IStack,
-// };
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import App from './App';
-
-ReactDOM.render(<App />, document.getElementById('app'));
+// import App from './App';
+//
+// ReactDOM.render(<App />, document.getElementById('app'));

@@ -8,11 +8,12 @@ import emitFiles from 'rollup-plugin-emit-files';
 import livereload from 'rollup-plugin-livereload';
 import serve from 'rollup-plugin-serve';
 import { terser } from 'rollup-plugin-terser';
+import external from 'rollup-plugin-peer-deps-external';
 
 import react from 'react';
-import reactDom from 'react-dom';
 
 import tsconfig from './tsconfig.json';
+import packageJSON from './package.json';
 
 const extensions = ['.ts', '.tsx', '.json', '.js'];
 
@@ -23,9 +24,9 @@ const src = 'src';
 const dest = 'dist';
 
 export default {
-  input: production ? 'index.js' : `${src}/index.tsx`,
+  input: 'index.js',
   output: {
-    dir: dest,
+    file: packageJSON.main,
     format: production ? 'cjs' : 'iife',
     sourcemap: !production && 'inline',
   },
@@ -37,22 +38,18 @@ export default {
     resolve({ extensions }),
     commonjs({
       include: 'node_modules/**',
-      namedExports: {
-        react: Object.keys(react),
-        'react-dom': Object.keys(reactDom),
-        'object-assign': Object.keys(Object.assign),
-      },
     }),
-    typescript({ useTsconfigDeclarationDir: true, clean: true }),
+    typescript({ useTsconfigDeclarationDir: true, clean: true, module: 'CommonJS' }),
     alias({
       resolve: ['.ts'],
       entries: Object.entries(tsconfig.compilerOptions.paths)
-          .map(([find, [replacement]]) => ({ find, replacement })), // prettier-ignore
+        .map(([find, [replacement]]) => ({ find, replacement })), // prettier-ignore
     }),
     json(),
     replace({
       'process.env.NODE_ENV': JSON.stringify(env),
     }),
+    external(),
     emitFiles({ src: 'public' }),
     !production && livereload({ watch: dest }),
     !production && serve({ contentBase: dest, port: 8080 }),
