@@ -1,21 +1,17 @@
-export class RGB {
-    private b: string;
-
-    private g: string;
-
-    private r: string;
-
-    constructor(r: string, g: string, b: string) {
-      this.r = r;
-      this.g = g;
-      this.b = b;
-    }
-
-    getColor() {
-      return `#${this.r}${this.g}${this.b}`;
-    }
+export interface IRGB {
+    red: string;
+    green: string;
+    blue: string;
+    getColor: () => string;
 }
 
-const rgb = (r: string, g: string, b: string): RGB => new RGB(r, g, b);
+const rgb = (r: string, g: string, b: string): IRGB => ({
+  red: r,
+  green: g,
+  blue: b,
+  getColor() {
+    return `#${this.red}${this.green}${this.blue}`;
+  },
+});
 
 export default rgb;

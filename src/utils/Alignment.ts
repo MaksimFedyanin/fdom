@@ -1,6 +1,6 @@
 enum Alignment {
-    LEFT = 'flex-start',
-    RIGHT = 'flex-end',
+    FLEX_START = 'flex-start',
+    FLEX_END = 'flex-end',
     CENTER = 'center',
 }
 

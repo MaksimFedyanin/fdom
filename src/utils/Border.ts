@@ -1,13 +1,12 @@
-import { CSSProperties } from 'react';
-import Color from './Color';
-import {RGB} from "./rgb";
+import Color from "./Color";
+import {IRGB} from "./rgb";
 
 export enum BorderType {
-    none = 'none',
-    solid = 'solid',
+    NONE = 'none',
+    SOLID = 'solid',
 }
 export interface IBorder {
-    width?: string;
+    width?: number | string;
     type?: BorderType;
-    color?: Color | RGB;
+    color?: Color | IRGB;
 }

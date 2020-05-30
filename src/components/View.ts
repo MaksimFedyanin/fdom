@@ -1,363 +1,211 @@
-import React, {CSSProperties, DetailedReactHTMLElement, ReactElement} from 'react';
-import { IBorder } from '../utils/Border';
-import Color from '../utils/Color';
-import { RGB } from '../utils/rgb';
+import React, { DetailedReactHTMLElement } from 'react';
 import Cursor from '../utils/Cursor';
-import isValidValue from '../utils/isValidValue';
+import Color from '../utils/Color';
+import { IRGB } from '../utils/rgb';
+import { BorderType, IBorder } from '../utils/Border';
+import Direction from '../utils/Direction';
+import Display from '../utils/Display';
+import Alignment from '../utils/Alignment';
+import FlexDirection from '../utils/FlexDirection';
 
-const getColor = (color: Color | RGB) => (color instanceof RGB ? color.getColor() : color);
-
-export abstract class ViewInstance {
-  protected style: any = {};
-
-  protected event: any = {};
-
-  public render() {
-    return React.createElement('div', { style: this.style, ...this.event });
-  }
-
-  private setValidValue(name: string, value: string) {
-    if (isValidValue(value)) {
-      this.style[name] = value;
-    } else {
-      console.log(`${name}: ${value} is not valid`);
-    }
-  }
-
-  public width(width: string) {
-    this.setValidValue('width', width);
-
-    return this;
-  }
-
-  public height(height: string) {
-    this.setValidValue('height', height);
-
-    return this;
-  }
-
-  public padding(top: string, right: string, bottom: string, left: string) {
-    this.paddingTop(top);
-    this.paddingRight(right);
-    this.paddingBottom(bottom);
-    this.paddingLeft(left);
-
-    return this;
-  }
-
-  public paddingTop(padding: string) {
-    this.setValidValue('paddingTop', padding);
-
-    return this;
-  }
-
-  public paddingRight(padding: string) {
-    this.setValidValue('paddingRight', padding);
-
-    return this;
-  }
-
-  public paddingBottom(padding: string) {
-    this.setValidValue('paddingBottom', padding);
-
-    return this;
-  }
-
-  public paddingLeft(padding: string) {
-    this.setValidValue('paddingLeft', padding);
-
-    return this;
-  }
-
-  public margin(top: string, right: string, bottom: string, left: string) {
-    this.marginTop(top);
-    this.marginRight(right);
-    this.marginBottom(bottom);
-    this.marginLeft(left);
-
-    return this;
-  }
-
-  public marginTop(margin: string) {
-    this.setValidValue('marginTop', margin);
-
-    return this;
-  }
-
-  public marginRight(margin: string) {
-    this.setValidValue('marginRight', margin);
-
-    return this;
-  }
-
-  public marginBottom(margin: string) {
-    this.setValidValue('marginBottom', margin);
-
-    return this;
-  }
-
-  public marginLeft(margin: string) {
-    this.setValidValue('marginLeft', margin);
-
-    return this;
-  }
-
-  public opacity(opacity: number) {
-    this.style.opacity = opacity / 100;
-
-    return this;
-  }
-
-  public cursor(cursor: Cursor) {
-    this.style.cursor = cursor;
-
-    return this;
-  }
-
-  private getBorder(border: IBorder, position: string) {
-    const cssBorder: CSSProperties = {};
-
-    cssBorder[`border${position}Width`] = border.width || this.style[`border${position}Width`];
-    cssBorder[`border${position}Color`] = border.color ? getColor(border.color) : this.style[`border${position}Color`];
-    cssBorder[`border${position}Style`] = border.type || this.style[`border${position}Style`];
-
-    return cssBorder;
-  }
-
-  public border(border: IBorder) {
-    this.style = { ...this.style, ...this.getBorder(border, '') };
-
-    return this;
-  }
-
-  public borderTop(border: IBorder) {
-    this.style = { ...this.style, ...this.getBorder(border, 'Top') };
-
-    return this;
-  }
-
-  public borderRight(border: IBorder) {
-    this.style = { ...this.style, ...this.getBorder(border, 'Right') };
-
-    return this;
-  }
-
-  public borderBottom(border: IBorder) {
-    this.style = { ...this.style, ...this.getBorder(border, 'Bottom') };
-
-    return this;
-  }
-
-  public borderLeft(border: IBorder) {
-    this.style = { ...this.style, ...this.getBorder(border, 'Left') };
-
-    return this;
-  }
-
-  public borderRadius(...args: string[]) {
-    if (args.length > 0 && args.length <= 4) {
-      this.style.borderRadius = args.reduce((a, b) => `${a} ${b}`, '');
-    }
-
-    return this;
-  }
-
-  public flex(flex: number) {
-    this.style.flex = flex;
-
-    return this;
-  }
-
-  public onHover(hover: (isHover: boolean) => void) {
-    this.event.onMouseEnter = () => hover(true);
-    this.event.onMouseLeave = () => hover(false);
-
-    return this;
-  }
-
-  public onClick(click: (event?: MouseEvent) => void) {
-    this.event.onClick = (event: MouseEvent) => click(event);
-
-    return this;
-  }
+export enum Elements {
+  Div = 'div',
+  Span = 'span',
+  P = 'p',
+  Input = 'input',
+  Btn = 'button',
+  TextArea = 'textarea',
+  A = 'a',
 }
 
 export interface IView {
-  _style: any,
-  _events: any,
-  render: () => DetailedReactHTMLElement<any, any>,
-  width: (width: string) => IView,
-  height: (height: string) => IView,
-  padding: (top: string, right: string, bottom: string, left: string) => IView,
-  paddingTop: (padding: string) => IView,
-  paddingRight: (padding: string) => IView,
-  paddingBottom: (padding: string) => IView,
-  paddingLeft: (padding: string) => IView,
-  margin: (top: string, right: string, bottom: string, left: string) => IView,
-  marginTop: (margin: string) => IView,
-  marginRight: (margin: string) => IView,
-  marginBottom: (margin: string) => IView,
-  marginLeft: (margin: string) => IView,
+  render: () => DetailedReactHTMLElement<any, any>
+  display: (display: Display) => IView,
+  width: (width: number | string) => IView,
+  height: (height: number | string) => IView,
+  background: (background: Color | IRGB) => IView,
+  padding: (direction?: Direction | Direction[], value?: number | string) => IView,
+  margin: (direction?: Direction | Direction[], value?: number | string) => IView,
+  color: (color: Color | IRGB) => IView,
   opacity: (opacity: number) => IView,
   cursor: (cursor: Cursor) => IView,
-  border: (border: IBorder) => IView,
-  borderTop: (border: IBorder) => IView,
-  borderRight: (border: IBorder) => IView,
-  borderBottom: (border: IBorder) => IView,
-  borderLeft: (border: IBorder) => IView,
-  borderRadius: (...args: string[]) => IView,
+  border: (direction: Direction | Direction[], value: IBorder) => IView,
+  borderRadius: (direction?: Direction | Direction[], value?: number | string) => IView,
   flex: (flex: number) => IView,
-  onHover: (hover: (isHover: boolean) => void) => IView,
-  onClick: (click: (event?: MouseEvent) => void) => IView,
+  flexDirection: (direction: FlexDirection) => IView,
+  justifyContent: (alignment: Alignment) => IView,
+  alignItems: (alignment: Alignment) => IView,
 }
 
-const View = (children?: any, type: string = 'div'): IView => (() => ({
-  _style: {},
-  _events: {},
-  _setValidValue(name: string, value: string) {
-    if (isValidValue(value)) {
-      this._style[name] = value;
+const View = (
+  element: Elements,
+  attributes: any,
+  ...children: IView[] | DetailedReactHTMLElement<any, any>[]
+): IView => {
+  const style: any = {};
+  const handlers: any = {};
+  const getValue = (value: number | string) => {
+    if (value) {
+      return typeof value === 'number' ? `${value}px` : value;
+    }
+
+    return '';
+  };
+  const getColor = (color?: Color | IRGB) => {
+    if (color) {
+      return typeof color === 'string' ? color : color.getColor();
+    }
+
+    return '';
+  };
+  const getBorder = (border: IBorder) => {
+    const width = getValue(border.width ? border.width : 0);
+    const color = getColor(border.color ? border.color : Color.black);
+    const type = border.type ? border.type : BorderType.NONE;
+
+    return `${width} ${color} ${type}`;
+  };
+  const setDirectionValue = (
+    property: string,
+    direction?: Direction | Direction[],
+    value?: number | string,
+  ) => {
+    let _direction: Direction[] = [];
+    let _value = '14px';
+
+    if (direction) {
+      if (typeof direction !== 'number') {
+        _direction = direction;
+      } else {
+        _direction.push(direction);
+      }
     } else {
-      console.log(`${name}: ${value} is not valid`);
+      _direction = [
+        Direction.TOP,
+        Direction.RIGHT,
+        Direction.BOTTOM,
+        Direction.LEFT,
+      ];
     }
-  },
-  _getBorder(border: IBorder, position: string) {
-    const cssBorder: CSSProperties = {};
-
-    cssBorder[`border${position}Width`] = border.width || this._style[`border${position}Width`];
-    cssBorder[`border${position}Color`] = border.color ? getColor(border.color) : this._style[`border${position}Color`];
-    cssBorder[`border${position}Style`] = border.type || this._style[`border${position}Style`];
-
-    return cssBorder;
-  },
-  render() {
-    return React.createElement(type, { style: this._style, ...this._events }, children);
-  },
-  width(width: string) {
-    this._setValidValue('width', width);
-
-    return this;
-  },
-  height(height: string) {
-    this._setValidValue('height', height);
-
-    return this;
-  },
-  padding(top: string, right: string, bottom: string, left: string) {
-    this.paddingTop(top);
-    this.paddingRight(right);
-    this.paddingBottom(bottom);
-    this.paddingLeft(left);
-
-    return this;
-  },
-  paddingTop(padding: string) {
-    this._setValidValue('paddingTop', padding);
-
-    return this;
-  },
-  paddingRight(padding: string) {
-    this._setValidValue('paddingRight', padding);
-
-    return this;
-  },
-  paddingBottom(padding: string) {
-    this._setValidValue('paddingBottom', padding);
-
-    return this;
-  },
-  paddingLeft(padding: string) {
-    this._setValidValue('paddingLeft', padding);
-
-    return this;
-  },
-  margin(top: string, right: string, bottom: string, left: string) {
-    this.marginTop(top);
-    this.marginRight(right);
-    this.marginBottom(bottom);
-    this.marginLeft(left);
-
-    return this;
-  },
-  marginTop(margin: string) {
-    this._setValidValue('marginTop', margin);
-
-    return this;
-  },
-  marginRight(margin: string) {
-    this._setValidValue('marginRight', margin);
-
-    return this;
-  },
-  marginBottom(margin: string) {
-    this._setValidValue('marginBottom', margin);
-
-    return this;
-  },
-  marginLeft(margin: string) {
-    this._setValidValue('marginLeft', margin);
-
-    return this;
-  },
-  opacity(opacity: number) {
-    this._style.opacity = opacity / 100;
-
-    return this;
-  },
-  cursor(cursor: Cursor) {
-    this._style.cursor = cursor;
-
-    return this;
-  },
-  border(border: IBorder) {
-    this._style = { ...this._style, ...this._getBorder(border, '') };
-
-    return this;
-  },
-  borderTop(border: IBorder) {
-    this._style = { ...this._style, ...this._getBorder(border, 'Top') };
-
-    return this;
-  },
-  borderRight(border: IBorder) {
-    this._style = { ...this._style, ...this._getBorder(border, 'Right') };
-
-    return this;
-  },
-  borderBottom(border: IBorder) {
-    this._style = { ...this._style, ...this._getBorder(border, 'Bottom') };
-
-    return this;
-  },
-  borderLeft(border: IBorder) {
-    this._style = { ...this._style, ...this._getBorder(border, 'Left') };
-
-    return this;
-  },
-  borderRadius(...args: string[]) {
-    if (args.length > 0 && args.length <= 4) {
-      this._style.borderRadius = args.reduce((a, b) => `${a} ${b}`, '');
+    if (value) {
+      _value = getValue(value);
     }
 
-    return this;
-  },
-  flex(flex: number) {
-    this._style.flex = flex;
+    _direction.forEach((item: Direction) => {
+      if (item === Direction.ALL) {
+        style[property] = _value;
+      }
+      if (item === Direction.HORIZONTAL) {
+        style[`${property}Right`] = _value;
+        style[`${property}Left`] = _value;
+      }
+      if (item === Direction.VERTICAL) {
+        style[`${property}Top`] = _value;
+        style[`${property}Bottom`] = _value;
+      }
+      if (item === Direction.TOP) {
+        style[`${property}Top`] = _value;
+      }
+      if (item === Direction.RIGHT) {
+        style[`${property}Right`] = _value;
+      }
+      if (item === Direction.BOTTOM) {
+        style[`${property}Bottom`] = _value;
+      }
+      if (item === Direction.LEFT) {
+        style[`${property}Left`] = _value;
+      }
+    });
+  };
+  return {
+    display(display: Display): IView {
+      style.display = display;
 
-    return this;
-  },
-  onHover(hover: (isHover: boolean) => void) {
-    this._events.onMouseEnter = () => hover(true);
-    this._events.onMouseLeave = () => hover(false);
-    this._style.test = '4444';
+      return this;
+    },
+    flex(flex: number): IView {
+      style.flex = flex;
 
-    return this;
-  },
-  onClick(click: (event?: MouseEvent) => void) {
-    this._events.onClick = (event: MouseEvent) => click(event);
+      return this;
+    },
+    flexDirection(direction: FlexDirection): IView {
+      style.flexDirection = direction;
 
-    return this;
-  },
-} as IView))();
+      return this;
+    },
+    justifyContent(alignment: Alignment): IView {
+      style.justifyContent = alignment;
 
-export default View;
+      return this;
+    },
+    alignItems(alignment: Alignment): IView {
+      style.alignItems = alignment;
+
+      return this;
+    },
+    width(width: string) {
+      style.width = width;
+
+      return this;
+    },
+    height(height: string) {
+      style.height = height;
+
+      return this;
+    },
+    background(background: Color | IRGB) {
+      style.background = getColor(background);
+
+      return this;
+    },
+    padding(direction?: Direction | Direction[], value?: number | string) {
+      setDirectionValue('padding', direction, value);
+
+      return this;
+    },
+    margin(direction?: Direction | Direction[], value?: number | string) {
+      setDirectionValue('margin', direction, value);
+
+      return this;
+    },
+    color(color: Color | IRGB) {
+      style.color = getColor(color);
+
+      return this;
+    },
+    border(direction: Direction | Direction[] = Direction.ALL, value: IBorder) {
+      setDirectionValue('border', direction, getBorder(value));
+
+      return this;
+    },
+    borderRadius(direction?: Direction | Direction[], value?: number | string) {
+      setDirectionValue('borderRadius', direction, value);
+
+      return this;
+    },
+    cursor(cursor: Cursor): IView {
+      style.cursor = cursor;
+
+      return this;
+    },
+    opacity(opacity: number): IView {
+      style.opacity = opacity / 100;
+
+      return this;
+    },
+    render(): DetailedReactHTMLElement<any, any> {
+      // @ts-ignore
+      const elements = children.map((
+        item: IView | DetailedReactHTMLElement<any, any>,
+      ) => (typeof item === 'object' && 'render' in item ? item.render() : item));
+
+      return React.createElement(element, { style, ...attributes }, ...elements);
+    },
+  };
+};
+
+export const createElement = (
+  element: Elements,
+  attributes,
+  ...children
+) => View(element, attributes, ...children);

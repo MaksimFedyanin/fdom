@@ -13,7 +13,6 @@ import react from 'react';
 import reactDom from 'react-dom';
 
 import tsconfig from './tsconfig.json';
-import pkg from './package.json';
 
 const extensions = ['.ts', '.tsx', '.json', '.js'];
 
@@ -25,19 +24,15 @@ const dest = 'dist';
 
 export default {
   input: production ? 'index.js' : `${src}/index.tsx`,
-  output: [{
+  output: {
     dir: dest,
     format: production ? 'cjs' : 'iife',
     sourcemap: !production && 'inline',
   },
-  {
-    file: pkg.module,
-    format: 'es',
-  }],
-  external: [
-    ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.peerDependencies || {}),
-  ],
+  external: production ? [
+    'react',
+    'react-dom',
+  ] : [],
   plugins: [
     resolve({ extensions }),
     commonjs({
@@ -52,7 +47,7 @@ export default {
     alias({
       resolve: ['.ts'],
       entries: Object.entries(tsconfig.compilerOptions.paths)
-        .map(([find, [replacement]]) => ({ find, replacement })), // prettier-ignore
+          .map(([find, [replacement]]) => ({ find, replacement })), // prettier-ignore
     }),
     json(),
     replace({
