@@ -19,8 +19,7 @@ const App = () => {
       .color(Color.white),
     Input({
       value,
-      placeholder: '4444',
-      onChangeValue: (data) => setValue(data),
+      onChange: (event: React.ChangeEvent<HTMLInputElement>) => setValue(event.target.value),
     }),
     ...ForEach(['2222', '4444'], (item) => Span(item)),
     Btn(
