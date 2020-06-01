@@ -1,5 +1,5 @@
-import { BorderType } from 'utils/Border';
-import Cursor from 'utils/Cursor';
+import { BorderType } from './utils/Border';
+import Cursor from './utils/Cursor';
 import Div from './components/Div';
 import A from './components/A';
 import P from './components/P';

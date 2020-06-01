@@ -1,4 +1,3 @@
-import React from 'react';
 import { createElement, Elements } from 'components/View';
 
 export interface IAttributesA {
