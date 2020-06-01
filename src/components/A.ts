@@ -5,10 +5,12 @@ export interface IAttributesA {
 }
 
 const A = (
+  title: string,
   attributes?: IAttributesA,
 ) => createElement(
   Elements.A,
   attributes || {},
+  ...[title],
 );
 
 export default A;

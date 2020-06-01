@@ -24,7 +24,7 @@ const src = 'src';
 const dest = 'dist';
 
 export default {
-  input: 'index.js',
+  input: `${src}/index.tsx`,
   output: {
     file: packageJSON.main,
     format: production ? 'cjs' : 'iife',

@@ -7,6 +7,7 @@ import Direction from '../utils/Direction';
 import Display from '../utils/Display';
 import Alignment from '../utils/Alignment';
 import FlexDirection from '../utils/FlexDirection';
+import { BackgroundSize } from '../utils/BackgroundSize';
 
 export enum Elements {
   Div = 'div',
@@ -36,6 +37,8 @@ export interface IView {
   flexDirection: (direction: FlexDirection) => IView,
   justifyContent: (alignment: Alignment) => IView,
   alignItems: (alignment: Alignment) => IView,
+  objectFit: (backgroundSize: BackgroundSize) => IView,
+  backgroundSize: (backgroundSize: BackgroundSize) => IView,
 }
 
 const View = (
@@ -156,6 +159,16 @@ const View = (
     },
     background(background: Color | IRGB) {
       style.background = getColor(background);
+
+      return this;
+    },
+    backgroundSize(backgroundSize: BackgroundSize): IView {
+      style.backgroundSize = backgroundSize;
+
+      return this;
+    },
+    objectFit(backgroundSize: BackgroundSize): IView {
+      style.objectFit = backgroundSize;
 
       return this;
     },
