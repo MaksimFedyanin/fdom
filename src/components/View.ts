@@ -16,6 +16,7 @@ export enum Elements {
   Btn = 'button',
   TextArea = 'textarea',
   A = 'a',
+  Image = 'img',
 }
 
 export interface IView {

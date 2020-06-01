@@ -1,6 +1,9 @@
 import { BorderType } from 'utils/Border';
 import Cursor from 'utils/Cursor';
 import Div from './components/Div';
+import A from './components/A';
+import P from './components/P';
+import Image from './components/Image';
 import Span from './components/Span';
 import Input from './components/Input';
 import Btn from './components/Btn';
@@ -17,6 +20,9 @@ export {
   Span,
   Input,
   Btn,
+  P,
+  A,
+  Image,
   ForEach,
   Color,
   Direction,
