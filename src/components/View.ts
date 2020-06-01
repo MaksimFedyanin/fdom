@@ -8,6 +8,7 @@ import Display from '../utils/Display';
 import Alignment from '../utils/Alignment';
 import FlexDirection from '../utils/FlexDirection';
 import { BackgroundSize } from '../utils/BackgroundSize';
+import FontWeight from '../utils/FontWeight';
 
 export enum Elements {
   Div = 'div',
@@ -31,8 +32,10 @@ export interface IView {
   color: (color: Color | IRGB) => IView,
   opacity: (opacity: number) => IView,
   cursor: (cursor: Cursor) => IView,
+  fontSize: (size: number | string) => IView,
+  fontWeight: (weight: FontWeight | number) => IView,
   border: (direction: Direction | Direction[], value: IBorder) => IView,
-  borderRadius: (direction?: Direction | Direction[], value?: number | string) => IView,
+  borderRadius: (value: number | string) => IView,
   flex: (flex: number) => IView,
   flexDirection: (direction: FlexDirection) => IView,
   justifyContent: (alignment: Alignment) => IView,
@@ -49,7 +52,7 @@ const View = (
   const style: any = {};
   const handlers: any = {};
   const getValue = (value: number | string) => {
-    if (value) {
+    if (value !== undefined) {
       return typeof value === 'number' ? `${value}px` : value;
     }
 
@@ -91,7 +94,7 @@ const View = (
         Direction.LEFT,
       ];
     }
-    if (value) {
+    if (value !== undefined) {
       _value = getValue(value);
     }
 
@@ -192,13 +195,23 @@ const View = (
 
       return this;
     },
-    borderRadius(direction?: Direction | Direction[], value?: number | string) {
-      setDirectionValue('borderRadius', direction, value);
+    borderRadius(value: number | string) {
+      style.borderRadius = getValue(value);
 
       return this;
     },
     cursor(cursor: Cursor): IView {
       style.cursor = cursor;
+
+      return this;
+    },
+    fontSize(size: number | string): IView {
+      style.fontSize = getValue(size);
+
+      return this;
+    },
+    fontWeight(weight: FontWeight | number): IView {
+      style.fontWeight = weight;
 
       return this;
     },
