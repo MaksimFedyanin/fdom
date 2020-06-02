@@ -17,6 +17,7 @@ import Alignment from './utils/Alignment';
 import FlexDirection from './utils/FlexDirection';
 import {rgb, rgba} from './utils/rgb';
 import {BackgroundSize} from "./utils/BackgroundSize";
+import WhiteSpace from "./utils/WhiteSpace";
 
 export {
   Div,
@@ -39,6 +40,7 @@ export {
   Cursor,
   BackgroundSize,
   If,
+  WhiteSpace,
 };
 
 // import React from 'react';

@@ -9,6 +9,7 @@ import Alignment from '../utils/Alignment';
 import FlexDirection from '../utils/FlexDirection';
 import { BackgroundSize } from '../utils/BackgroundSize';
 import FontWeight from '../utils/FontWeight';
+import WhiteSpace from '../utils/WhiteSpace';
 
 export enum Elements {
   Div = 'div',
@@ -42,6 +43,7 @@ export interface IView {
   alignItems: (alignment: Alignment) => IView,
   objectFit: (backgroundSize: BackgroundSize) => IView,
   backgroundSize: (backgroundSize: BackgroundSize) => IView,
+  whiteSpace: (space: WhiteSpace) => IView,
 }
 
 const View = (
@@ -212,6 +214,11 @@ const View = (
     },
     fontWeight(weight: FontWeight | number): IView {
       style.fontWeight = weight;
+
+      return this;
+    },
+    whiteSpace(space: WhiteSpace): IView {
+      style.whiteSpace = space;
 
       return this;
     },
