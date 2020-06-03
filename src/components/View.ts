@@ -23,7 +23,9 @@ export enum Elements {
 }
 
 export interface IView {
-  render: () => DetailedReactHTMLElement<any, any>
+  render: () => DetailedReactHTMLElement<any, any>,
+  className: (className: string) => IView,
+  id: (id: string) => IView,
   display: (display: Display) => IView,
   width: (width: number | string) => IView,
   height: (height: number | string) => IView,
@@ -44,6 +46,7 @@ export interface IView {
   objectFit: (backgroundSize: BackgroundSize) => IView,
   backgroundSize: (backgroundSize: BackgroundSize) => IView,
   whiteSpace: (space: WhiteSpace) => IView,
+  onHover: (action: (hover: boolean) => void) => IView,
 }
 
 const View = (
@@ -52,6 +55,7 @@ const View = (
   ...children: IView[] | DetailedReactHTMLElement<any, any>[]
 ): IView => {
   const style: any = {};
+  const props: any = {};
   const handlers: any = {};
   const getValue = (value: number | string) => {
     if (value !== undefined) {
@@ -127,6 +131,16 @@ const View = (
     });
   };
   return {
+    className(className: string): IView {
+      props.className = className;
+
+      return this;
+    },
+    id(id: string): IView {
+      props.id = id;
+
+      return this;
+    },
     display(display: Display): IView {
       style.display = display;
 
@@ -227,13 +241,28 @@ const View = (
 
       return this;
     },
+    onHover(action: (hover: boolean) => void): IView {
+      handlers.onMouseEnter = () => action(true);
+      handlers.onMouseLeave = () => action(false);
+
+      return this;
+    },
     render(): DetailedReactHTMLElement<any, any> {
       // @ts-ignore
       const elements = children.map((
         item: IView | DetailedReactHTMLElement<any, any>,
       ) => (typeof item === 'object' && 'render' in item ? item.render() : item));
 
-      return React.createElement(element, { style, ...attributes }, ...elements);
+      return React.createElement(
+        element,
+        {
+          style,
+          ...attributes,
+          ...props,
+          ...handlers,
+        },
+        ...elements,
+      );
     },
   };
 };
