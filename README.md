@@ -3,6 +3,7 @@
 Functional dom - Fantastic dom, Functional ui - Fantastic ui
 
 description of functional style components
+
 all display logic in a single file, with all the power of react js
 
 **why?**
