@@ -12,7 +12,7 @@ all display logic in a single file, with all the power of react js
 
 **examples**
 div
-'''
+```
 Div(
     Span('Your text')
       .color(Color.white)
@@ -27,9 +27,9 @@ Div(
     .padding(Direction.VERTICAL, 50)
     .padding(Direction.LEFT, 100)
     .render();
-'''
+```
 input
-'''
+```
 const [value, setValue] = useState('');
 
 Input({
@@ -37,4 +37,4 @@ Input({
       onChange: (event: React.ChangeEvent<HTMLInputElement>) => setValue(event.target.value),
     })
     .color(Color.black)
-'''
+```
