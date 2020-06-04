@@ -11,6 +11,7 @@ all display logic in a single file, with all the power of react js
 - 3 simplifies ui testing
 
 **examples**
+
 div
 ```
 Div(
